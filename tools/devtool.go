@@ -3,7 +3,7 @@ package tools
 
 import (
     "encoding/json"
-    "kube-store-operator/commons/logger"
+    "github.com/lemonit-eric-mao/commons/logger"
     "log"
     "sigs.k8s.io/yaml"
     "time"
