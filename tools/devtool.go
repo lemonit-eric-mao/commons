@@ -5,6 +5,7 @@ import (
     "encoding/json"
     "github.com/lemonit-eric-mao/commons/logger"
     "log"
+    "net"
     "sigs.k8s.io/yaml"
     "time"
     "unsafe"
@@ -76,4 +77,21 @@ func SetInterval(ms time.Duration, f func()) chan bool {
     }(ticker)
 
     return stop
+}
+
+
+// GetLocalIP 获取本地 IPv4 地址
+func GetLocalIP() string {
+
+    addrs, _ := net.InterfaceAddrs()
+
+    for _, address := range addrs {
+        // 检查 IP 地址是否为 IPv4，并且不是回环地址
+        if ipnet, ok := address.(*net.IPNet); ok && ipnet.IP.IsPrivate() {
+            logger.Debugf("%s--------%v \n, ", ipnet.IP.String(), ipnet.IP.IsPrivate())
+            return ipnet.IP.String()
+        }
+    }
+
+    return ""
 }
