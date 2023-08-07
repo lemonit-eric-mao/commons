@@ -88,7 +88,7 @@ func GetLocalIP() string {
     for _, address := range addrs {
         // 检查 IP 地址是否为 IPv4，并且不是回环地址
         if ipnet, ok := address.(*net.IPNet); ok && ipnet.IP.IsPrivate() {
-            logger.Debugf("%s--------%v \n, ", ipnet.IP.String(), ipnet.IP.IsPrivate())
+            logger.Debug(ipnet.IP.String())
             return ipnet.IP.String()
         }
     }
