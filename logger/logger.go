@@ -36,8 +36,6 @@ var LogLevelNames = []string{"ERROR", "INFO", "WARNING", "DEBUG"}
 var logLevel LogLevel
 
 func init() {
-    // TODO: 设置日志工具级别
-    os.Setenv("LOG_LEVEL", "DEBUG")
     setLogLevelFromEnv()
 }
 
