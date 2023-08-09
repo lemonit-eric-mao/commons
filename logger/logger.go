@@ -35,7 +35,7 @@ var LogLevelNames = []string{"ERROR", "INFO", "WARNING", "DEBUG"}
 
 var logLevel LogLevel
 
-func init() {
+func New() {
     setLogLevelFromEnv()
 }
 
