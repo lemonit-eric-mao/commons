@@ -3,9 +3,12 @@ package tools
 
 import (
     "encoding/json"
+    "fmt"
     "github.com/lemonit-eric-mao/commons/logger"
     "log"
     "net"
+    "os/exec"
+    "runtime"
     "sigs.k8s.io/yaml"
     "time"
     "unsafe"
@@ -79,7 +82,6 @@ func SetInterval(ms time.Duration, f func()) chan bool {
     return stop
 }
 
-
 // GetLocalIP 获取本地 IPv4 地址
 func GetLocalIP() string {
 
@@ -94,4 +96,22 @@ func GetLocalIP() string {
     }
 
     return ""
+}
+
+// OpenBrowser 打开浏览器
+func OpenBrowser(url string) error {
+    var err error
+
+    switch runtime.GOOS {
+    case "linux":
+        err = exec.Command("xdg-open", url).Start()
+    case "windows":
+        err = exec.Command("cmd", "/c", "start", url).Start()
+    case "darwin":
+        err = exec.Command("open", url).Start()
+    default:
+        err = fmt.Errorf("unsupported platform")
+    }
+
+    return err
 }
