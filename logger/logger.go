@@ -35,7 +35,7 @@ var LogLevelNames = []string{"ERROR", "INFO", "WARNING", "DEBUG"}
 
 var logLevel LogLevel
 
-func New() {
+func init() {
     setLogLevelFromEnv()
 }
 
@@ -46,7 +46,7 @@ func setLogLevel(level LogLevel) {
 func setLogLevelFromEnv() {
     logLevelStr := os.Getenv("LOG_LEVEL")
     if logLevelStr == "" {
-        setLogLevel(LogInfo)
+        setLogLevel(LogDebug)
         return
     }
     switch logLevelStr {
