@@ -5,7 +5,6 @@ import (
     "encoding/json"
     "fmt"
     "github.com/lemonit-eric-mao/commons/logger"
-    "log"
     "net"
     "os/exec"
     "runtime"
@@ -43,7 +42,7 @@ func StringToBytes(data string) []byte {
 func StructToString(a any) string {
     buf, err := json.Marshal(a)
     if err != nil {
-        log.Panic(err)
+        logger.Error(err)
     }
     return string(buf)
 }
@@ -51,10 +50,12 @@ func StructToString(a any) string {
 // SetInterval 自定义，定时器工具
 /**
 func main() {
+    // 使用定时器
     chanStop := tools.SetInterval(3e9, func() {})
 
+    // 让定时器持续运行 10秒
     time.Sleep(10e9)
-    // 关闭定时器
+    // 10秒后 关闭定时器
     chanStop <- true
 }
 */
@@ -69,10 +70,10 @@ func SetInterval(ms time.Duration, f func()) chan bool {
         for {
             select {
             case <-ticker.C:
-                logger.Infof("定时器%v运行\n", &ticker)
+                logger.Debugf("定时器%v运行\n", &ticker)
                 f()
             case <-stop:
-                logger.Infof("定时器%v停止\n", &ticker)
+                logger.Debugf("定时器%v停止\n", &ticker)
                 return
             }
         }
