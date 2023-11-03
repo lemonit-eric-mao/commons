@@ -60,13 +60,12 @@ func main() {
 }
 */
 func SetInterval(ms time.Duration, f func()) chan bool {
-
     ticker := time.NewTicker(ms)
-
     stop := make(chan bool)
 
-    go func(tk *time.Ticker) {
-        defer tk.Stop()
+    go func() {
+        defer ticker.Stop()
+        defer close(stop)
         for {
             select {
             case <-ticker.C:
@@ -77,8 +76,7 @@ func SetInterval(ms time.Duration, f func()) chan bool {
                 return
             }
         }
-
-    }(ticker)
+    }()
 
     return stop
 }
